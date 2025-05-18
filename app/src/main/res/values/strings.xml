@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Habit Tracker</string>
+
+    <string name="habit1">Exercise</string>
+    <string name="description1">Crush a gym session or go for a run!</string>
+
+    <string name="habit2">Drink water</string>
+    <string name="description2">Make sure you stay hydrated all day!</string>
+
+    <string name="habit3">Make your bed</string>
+    <string name="description3">Small things can make your day!</string>
+
+    <string name="habit4">Read</string>
+    <string name="description4">Only the educated are free!</string>
+
+    <string name="habit5">Walk</string>
+    <string name="description5">An effortess way to move your body!</string>
+
+    <string name="habit6">Study</string>
+    <string name="description6">Keep chasing your goals!</string>
+
+    <string name="today">Today</string>
+</resources>
