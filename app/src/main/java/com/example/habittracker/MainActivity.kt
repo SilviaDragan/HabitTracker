@@ -11,7 +11,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.habittracker.ui.components.BottomBar
-import com.example.sportsnetwork.navigation.BottomNavGraph
+import com.example.habittracker.navigation.BottomNavGraph
 import com.example.habittracker.ui.theme.HabitTrackerTheme
 
 class MainActivity : ComponentActivity() {

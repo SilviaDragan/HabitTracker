@@ -1,5 +1,6 @@
 package com.example.habittracker.screens
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -8,44 +9,63 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.habittracker.R
 import com.example.habittracker.ui.components.BottomBar
 import com.example.habittracker.ui.theme.HabitTrackerTheme
+import com.example.habittracker.ui.viewmodel.QuoteViewModel
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodayScreen(navController: NavHostController) {
+    val quoteVm: QuoteViewModel = viewModel()
+    LaunchedEffect(Unit) { quoteVm.loadQuote() }
+    val quote = quoteVm.quote.value
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = {
-            TodayTopBar()
-        },
-        bottomBar = {
-            BottomBar(navController)
-        }
+        topBar = { TodayTopBar() },
+        bottomBar = { BottomBar(navController) }
     ) { innerPadding ->
-        androidx.compose.foundation.layout.Column(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            Text(
-                text = "Welcome back!",
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(16.dp)
-            )
-            Text(
-                text = "“The secret of getting ahead is getting started.”",
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-        }
+            // Quote Banner
+            if (quote != null) {
+                Text(
+                    text = "Quote of the day:",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+                Text(
+                    text = "“${quote.quoteText}”",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            } else {
+                Text(
+                    text = "Loading quote…",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
 
+            // Here i wil display the list of added habits to complete
+            // each habit will have a checkbox to mark it as completed
+            // get a fun pop-up reaction when completing a habit
+
+            // a habit marked as completed is displayed in a different color and with a completed icon
+
+            // if all habits are completed, show a congratulatory message above all habits.
+        }
     }
 }
 
@@ -62,7 +82,6 @@ fun TodayTopBar(modifier: Modifier = Modifier) {
         modifier = modifier
     )
 }
-
 
 @Preview(showBackground = true)
 @Composable
