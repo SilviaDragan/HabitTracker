@@ -55,9 +55,6 @@ import com.example.habittracker.ui.theme.HabitTrackerTheme
 fun MainScreen(navController: NavHostController) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-//        topBar = {
-//            TopAppBar()
-//        },
         bottomBar = {
             BottomBar(navController)
         }

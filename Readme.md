@@ -1,41 +1,43 @@
-# IPP — Habit Tracker
+# Habit Tracker
 
-A simple and modern Habit Tracker app built using Android Jetpack Compose.
-
-It allows users to create, edit, and delete habits, and track their progress over time, with Firebase Realtime Database integration for cloud storage.
-
----
+Habit Tracker is a simple and modern Android app built with Jetpack Compose. 
+It helps users build better habits by allowing them to create, edit, and track daily habits, all in a clean and intuitive interface.
 
 ## Features
 
-- Add habits from predefined templates
-- Create and manage custom habit templates
-- Track daily, monthly, and yearly progress
-- Visual feedback on habit completion
-- User login and authentication
-
----
+- Track your habits: add, edit, and delete habits. Mark them as completed each day.
+- Daily inspiration: get a new inspirational quote every day from the [Forismatic API](http://api.forismatic.com/).
+- Dark & light mode: easily switch between light and dark themes from the settings screen.
+- Organized navigation: bottom navigation bar with Home, Habits, and Settings screens.
+- Modern architecture: built with MVVM, Room Database, and best practices for Android development.
+- Smooth experience: uses Kotlin coroutines for fast and responsive UI.
 
 ## Tech Stack
 
 - Kotlin
 - Jetpack Compose
-- Firebase Realtime Database
-- Android Jetpack libraries (Navigation, Lifecycle, etc.)
+- Room Database
+- Retrofit (Forismatic API integration)
+- MVVM Architecture
+- Coroutines
 
----
+## Screenshots
 
-## Extras
-- Google Sign-In API for user authentication
-- Settings for dark mode and language switching
-- Push notifications for habit reminders
-- Habit streak tracking and analytics
-- Unit testing and UI testing
+![Home Screen](screenshots/homescreenLightTheme.png)
+*Shows the main dashboard with today\'s habits and progress in light mode.*
 
----
+![Home Screen — Dark Theme](screenshots/darkTheme.png)
+*Presents the main dashboard and habits list in dark mode for comfortable night-time use.*
 
-## Notes
+![Habits Screen](screenshots/habitsList.png)
+*Displays the list of all habits, with options to add, edit, or delete habits in light mode.*
 
-- For login functionality, plan to integrate Android Credential Manager API - [Google Sign-In API]
-- All data synced with Firebase Realtime Database.
-- Clean architecture approach (MVVM).
+![Add habit](screenshots/addHabit.png)
+![Add custom habit](screenshots/customHabit.png)
+
+
+## Getting Started
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/SilviaDragan/HabitTracker

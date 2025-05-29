@@ -32,7 +32,6 @@ class HabitViewModel(application: Application) : AndroidViewModel(application) {
         )
 
     private val _isSaving = MutableLiveData(false)
-    val isSaving: LiveData<Boolean> = _isSaving
 
     private val _saveResult = MutableLiveData<Result<Long>>()
     val saveResult: LiveData<Result<Long>> = _saveResult
