@@ -35,10 +35,11 @@ import com.example.habittracker.model.Habit
 import com.example.habittracker.model.HabitsRepository
 import com.example.habittracker.ui.components.BottomBar
 import com.example.habittracker.ui.theme.HabitTrackerTheme
+import android.net.Uri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewHabitScreen(navController: NavHostController) {
+fun HabitsScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -101,11 +102,15 @@ private fun PopularHabitsList(
                 SectionHeader()
             }
             itemsIndexed(habits) { index, habit ->
+                val label = stringResource(id = habit.nameRes)
+
                 HabitListItem(
                     habit = habit,
                     modifier = Modifier
                         .padding(horizontal = 20.dp)
-                        .clickable { navController.navigate("habit_detail/${habit.nameRes}") }
+                        .clickable {
+                            navController.navigate("habit_detail/${Uri.encode(label)}")
+                        }
                         .animateEnterExit(
                             enter = slideInVertically(
                                 initialOffsetY = { it * (index + 1) },
@@ -246,24 +251,6 @@ fun HabitListItem(
 fun NewHabitScreenPreview() {
     val navController = androidx.navigation.compose.rememberNavController()
     HabitTrackerTheme {
-        NewHabitScreen(navController)
-    }
-}
-
-// Preview for CreateCustomHabitCard
-@Preview(showBackground = true)
-@Composable
-private fun PreviewCreateCustomHabitCard() {
-    HabitTrackerTheme {
-        CreateCustomHabitCard()
-    }
-}
-
-// Preview for SectionHeader
-@Preview(showBackground = true)
-@Composable
-private fun PreviewSectionHeader() {
-    HabitTrackerTheme {
-        SectionHeader()
+        HabitsScreen(navController)
     }
 }

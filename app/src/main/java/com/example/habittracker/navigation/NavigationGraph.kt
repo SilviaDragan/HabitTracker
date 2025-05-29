@@ -1,16 +1,20 @@
 package com.example.habittracker.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.habittracker.screens.AddHabitScreen
-import com.example.habittracker.screens.NewHabitScreen
-import com.example.habittracker.screens.ProfileScreen
+import com.example.habittracker.screens.HabitsScreen
+import com.example.habittracker.screens.SettingsScreen
 import com.example.habittracker.screens.TodayScreen
-import com.example.sportsnetwork.navigation.NavigationScreens
+import com.example.habittracker.ui.viewmodel.HabitViewModel
+
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun BottomNavGraph(navController: NavHostController) {
@@ -19,26 +23,43 @@ fun BottomNavGraph(navController: NavHostController) {
         navController = navController,
         startDestination = NavigationScreens.Home.route
     ) {
-        composable(route = NavigationScreens.Home.route) {
-            TodayScreen(navController = navController)
+        composable(route = NavigationScreens.Home.route) { backStackEntry ->
+            val vm: HabitViewModel = viewModel(backStackEntry)
+            val habits by vm.habits.collectAsStateWithLifecycle()
+
+            TodayScreen(
+                navController = navController,
+                habitVm = vm
+            )
         }
+
         composable(route = NavigationScreens.Habits.route) {
-            NewHabitScreen(navController = navController)
+            HabitsScreen(navController = navController)
         }
+
         composable(route = NavigationScreens.Profile.route) {
-            ProfileScreen(navController = navController)
+            SettingsScreen(navController = navController)
         }
+
         composable(
             route = "habit_detail/{habitName}",
-            arguments = listOf(navArgument("habitName") { type = NavType.StringType })
-        ) { backStackEntry ->
-            val habitName = backStackEntry.arguments?.getString("habitName") ?: ""
+            arguments = listOf(navArgument("habitName") {
+                type = NavType.StringType
+            })
+        ) { backStack ->
+            val name = backStack.arguments?.getString("habitName") ?: ""
             AddHabitScreen(
-                habitName = habitName,
+                habitName = name,
                 navController = navController,
-                onSave = { name, goal -> {} }
+                onSave = { _, _ ->
+                    navController.navigate(NavigationScreens.Home.route) {
+                        popUpTo(NavigationScreens.Home.route) {
+                            inclusive = false
+                        }
+                        launchSingleTop = true
+                    }
+                }
             )
         }
     }
 }
-

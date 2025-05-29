@@ -15,7 +15,7 @@ import com.example.habittracker.ui.components.BottomBar
 import com.example.habittracker.ui.theme.HabitTrackerTheme
 
 @Composable
-fun ProfileScreen(navController: NavHostController) {
+fun SettingsScreen(navController: NavHostController) {
     Scaffold(
         bottomBar = { BottomBar(navController) }
     ) {
@@ -40,6 +40,6 @@ fun ProfileScreen(navController: NavHostController) {
 fun ProfileScreenPreview() {
     val navController = androidx.navigation.compose.rememberNavController()
     HabitTrackerTheme {
-        ProfileScreen(navController)
+        SettingsScreen(navController)
     }
 }

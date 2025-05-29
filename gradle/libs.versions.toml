@@ -22,6 +22,9 @@ roomRuntime = "2.7.1"
 roomRxjava2 = "2.7.1"
 roomRxjava3 = "2.7.1"
 roomTesting = "2.7.1"
+roomCommonJvm = "2.7.1"
+roomRuntimeAndroid = "2.7.1"
+databindingAdapters = "8.10.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
@@ -49,6 +52,9 @@ androidx-animation-android = { group = "androidx.compose.animation", name = "ani
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 androidx-navigation-compose-android = { group = "androidx.navigation", name = "navigation-compose-android", version.ref = "navigationComposeAndroid" }
 material-v1110 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+androidx-room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
+androidx-room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "roomRuntimeAndroid" }
+androidx-databinding-adapters = { group = "androidx.databinding", name = "databinding-adapters", version.ref = "databindingAdapters" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
