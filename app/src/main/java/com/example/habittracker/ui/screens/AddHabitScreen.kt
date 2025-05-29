@@ -1,4 +1,4 @@
-package com.example.habittracker.screens
+package com.example.habittracker.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,7 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.habittracker.data.HabitDatabase
 import com.example.habittracker.data.HabitEntity
+import com.example.habittracker.navigation.NavigationScreens
 import com.example.habittracker.ui.components.GoalCard
+import com.example.habittracker.ui.viewmodel.HabitViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,6 +43,7 @@ import kotlinx.coroutines.withContext
 fun AddHabitScreen(
     habitName: String,
     navController: NavHostController,
+    habitVm: HabitViewModel,
     onSave: (String, String) -> Unit = { _, _ -> }
 ) {
     var goal by remember { mutableStateOf("1 time per day") }
@@ -83,18 +86,10 @@ fun AddHabitScreen(
 
             Button(
                 onClick = {
-                    val database = HabitDatabase.getDatabase(context)
-                    val habit = HabitEntity(name = habitName, goal = goal)
-
-                    CoroutineScope(Dispatchers.IO).launch {
-                        try {
-                            database.habitDao().insertHabit(habit)
-                            withContext(Dispatchers.Main) {
-                                onSave(habitName, goal)
-                                navController.popBackStack()
-                            }
-                        } catch (e: Exception) {
-                            e.printStackTrace()
+                    habitVm.saveHabitAndWait(habitName, goal) {
+                        navController.navigate(NavigationScreens.Home.route) {
+                            popUpTo(0) { inclusive = true }
+                            launchSingleTop = true
                         }
                     }
                 },
@@ -106,14 +101,4 @@ fun AddHabitScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AddHabitScreenPreview() {
-    val navController = NavHostController(LocalContext.current)
-    AddHabitScreen(
-        habitName = "Drink Water",
-        navController = navController
-    )
 }

@@ -13,5 +13,5 @@ sealed class NavigationScreens(
 ) {
     data object Home : NavigationScreens("home", "Home", Icons.Default.Home)
     data object Habits : NavigationScreens("habits", "Habits", Icons.Default.Add)
-    data object Profile : NavigationScreens("settings", "Settings", Icons.Default.Settings)
+    data object Settings : NavigationScreens("settings", "Settings", Icons.Default.Settings)
 }

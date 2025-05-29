@@ -1,4 +1,4 @@
-package com.example.habittracker.screens
+package com.example.habittracker.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -44,6 +44,9 @@ fun TodayScreen(
     habitVm: HabitViewModel
 ) {
     val habits by habitVm.habits.collectAsState()
+    LaunchedEffect(habits) {
+        println("TodayScreen updated: habits = ${habits.size}")
+    }
     val showCongrats by habitVm.showCongrats.collectAsState()
 
     val quoteVm: QuoteViewModel = viewModel()

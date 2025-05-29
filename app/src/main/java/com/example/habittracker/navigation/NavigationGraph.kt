@@ -7,29 +7,30 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.habittracker.screens.AddHabitScreen
-import com.example.habittracker.screens.HabitsScreen
-import com.example.habittracker.screens.SettingsScreen
-import com.example.habittracker.screens.TodayScreen
+import com.example.habittracker.ui.screens.AddHabitScreen
+import com.example.habittracker.ui.screens.HabitsScreen
+import com.example.habittracker.ui.screens.SettingsScreen
+import com.example.habittracker.ui.screens.TodayScreen
 import com.example.habittracker.ui.viewmodel.HabitViewModel
 
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-
+import com.example.habittracker.ui.screens.AddCustomHabitScreen
 @Composable
-fun BottomNavGraph(navController: NavHostController) {
-
+fun BottomNavGraph(
+    navController: NavHostController,
+    habitVm: HabitViewModel,
+    isDarkMode: Boolean,
+    onToggleDarkMode: (Boolean) -> Unit
+) {
     NavHost(
         navController = navController,
         startDestination = NavigationScreens.Home.route
     ) {
-        composable(route = NavigationScreens.Home.route) { backStackEntry ->
-            val vm: HabitViewModel = viewModel(backStackEntry)
-            val habits by vm.habits.collectAsStateWithLifecycle()
-
+        composable(route = NavigationScreens.Home.route) {
             TodayScreen(
                 navController = navController,
-                habitVm = vm
+                habitVm = habitVm
             )
         }
 
@@ -37,8 +38,12 @@ fun BottomNavGraph(navController: NavHostController) {
             HabitsScreen(navController = navController)
         }
 
-        composable(route = NavigationScreens.Profile.route) {
-            SettingsScreen(navController = navController)
+        composable(route = NavigationScreens.Settings.route) {
+            SettingsScreen(
+                navController = navController,
+                isDarkMode = isDarkMode,
+                onToggleDarkMode = onToggleDarkMode
+            )
         }
 
         composable(
@@ -51,11 +56,23 @@ fun BottomNavGraph(navController: NavHostController) {
             AddHabitScreen(
                 habitName = name,
                 navController = navController,
+                habitVm = habitVm,
                 onSave = { _, _ ->
                     navController.navigate(NavigationScreens.Home.route) {
-                        popUpTo(NavigationScreens.Home.route) {
-                            inclusive = false
-                        }
+                        popUpTo(0) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+
+        composable(route = "habit_detail/custom") {
+            AddCustomHabitScreen(
+                navController = navController,
+                habitVm = habitVm,
+                onSave = { _, _ ->
+                    navController.navigate(NavigationScreens.Home.route) {
+                        popUpTo(0) { inclusive = true }
                         launchSingleTop = true
                     }
                 }

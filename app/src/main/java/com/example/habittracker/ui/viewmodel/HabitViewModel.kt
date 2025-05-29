@@ -12,6 +12,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.dropWhile
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -22,7 +24,6 @@ class HabitViewModel(application: Application) : AndroidViewModel(application) {
         HabitRepository(database.habitDao())
     }
 
-    // Exposed read-only flow of habits
     val habits: StateFlow<List<HabitEntity>> = repository.getAllHabits()
         .stateIn(
             scope = viewModelScope,
@@ -77,6 +78,20 @@ class HabitViewModel(application: Application) : AndroidViewModel(application) {
             _showCongrats.value = true
             delay(1500)
             _showCongrats.value = false
+        }
+    }
+
+    fun saveHabitAndWait(name: String, goal: String, onComplete: () -> Unit) {
+        viewModelScope.launch {
+            val initialCount = habits.value.size
+            val habit = HabitEntity(name = name, goal = goal)
+            repository.insertHabit(habit)
+
+            habits
+                .dropWhile { it.size <= initialCount }
+                .firstOrNull()
+
+            onComplete()
         }
     }
 }

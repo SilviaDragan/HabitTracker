@@ -1,4 +1,4 @@
-package com.example.habittracker.screens
+package com.example.habittracker.ui.screens
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
